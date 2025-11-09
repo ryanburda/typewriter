@@ -6,16 +6,43 @@ pub fn script() {
     // Move to the above split
     type_chord(vec![Key::ControlLeft, Key::KeyK]);
 
-    // Add new buf-mark
-    type_string(":BufMarkSet b".to_string());
-    thread::sleep(time::Duration::from_millis(400));
+    // Open `lua/buf-mark/init.lua`
+    type_string(":e lua/buf-mark/init.lua".to_string());
+    thread::sleep(time::Duration::from_millis(300));
     type_chord(vec![Key::Return]);
 
-    // Insert at the bottom of the buffer
-    type_string("GA".to_string());
+    // Add buf-mark
+    thread::sleep(time::Duration::from_millis(500));
+    type_string(":BufMarkSet i".to_string());
+    thread::sleep(time::Duration::from_millis(700));
     type_chord(vec![Key::Return]);
+
+    // Open and buf-mark README.md
+    thread::sleep(time::Duration::from_millis(500));
+    type_string(":e README.md".to_string());
+    thread::sleep(time::Duration::from_millis(700));
     type_chord(vec![Key::Return]);
-    type_string(",<.>/?;:'\"[{]}\\|-_=+`~".to_string());
-    type_string("1234567890!@#$%^&*()".to_string());
-    type_chord(vec![Key::Escape]);
+
+    thread::sleep(time::Duration::from_millis(1000));
+    type_string(":BufMarkSet r".to_string());
+    thread::sleep(time::Duration::from_millis(700));
+    type_chord(vec![Key::Return]);
+
+    // Move down 16 lines in README.md
+    thread::sleep(time::Duration::from_millis(1000));
+    for _ in 0..16 {
+        type_chord(vec![Key::KeyJ]);
+    }
+
+    // Switch back to buf-mark i
+    thread::sleep(time::Duration::from_millis(1000));
+    type_string(":BufMarkGoto i".to_string());
+    thread::sleep(time::Duration::from_millis(700));
+    type_chord(vec![Key::Return]);
+
+    // Switch back to buf-mark r
+    thread::sleep(time::Duration::from_millis(1000));
+    type_string(":BufMarkGoto r".to_string());
+    thread::sleep(time::Duration::from_millis(700));
+    type_chord(vec![Key::Return]);
 }
