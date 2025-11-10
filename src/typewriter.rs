@@ -11,7 +11,7 @@
 //! use typewriter::*;
 //!
 //! // Type a simple string
-//! type_string("Hello, World!".to_string());
+//! type_string("Hello, World!".to_string(), 50);
 //!
 //! // Type a keyboard shortcut (Ctrl+C)
 //! type_chord(vec![Key::ControlLeft, Key::KeyC]);
@@ -38,9 +38,9 @@ pub fn sleep(millis: u64) {
 /// Sends a keyboard event and waits 50ms.
 ///
 /// This is an internal helper function that simulates a keyboard event
-/// (such as a key press or release) and includes a 50ms delay to ensure
+/// (such as a key press or release) and includes a small delay to ensure
 /// proper event processing.
-///
+//
 /// # Arguments
 ///
 /// * `event_type` - The keyboard event to simulate (KeyPress or KeyRelease)
@@ -55,7 +55,8 @@ fn send(event_type: &EventType) {
             println!("We could not send {:?}", event_type);
         }
     }
-    sleep(50)
+    // Sleep enough time to ensure proper event processing.
+    sleep(20)
 }
 
 /// Types a chord by pressing multiple keys simultaneously.
@@ -187,7 +188,7 @@ pub fn type_char(c: char) {
         '%' => type_chord(vec![Key::ShiftLeft, Key::Num5]),
         '^' => type_chord(vec![Key::ShiftLeft, Key::Num6]),
         '&' => type_chord(vec![Key::ShiftLeft, Key::Num7]),
-        '*' => type_chord(vec![Key::ShiftLeft, Key::Num8]),
+        '*' => type_chord(vec![Key::ShiftLeft, Key::Num9]),
         '(' => type_chord(vec![Key::ShiftLeft, Key::Num9]),
         ')' => type_chord(vec![Key::ShiftLeft, Key::Num0]),
         ' ' => type_chord(vec![Key::Space]),
@@ -226,19 +227,21 @@ pub fn type_char(c: char) {
 /// # Arguments
 ///
 /// * `s` - The string to type
+/// * `sleep_millis` - The number of milliseconds to wait between typing each character
 ///
 /// # Examples
 ///
 /// ```
-/// type_string("Hello, World!".to_string());
-/// type_string("user@example.com".to_string());
+/// type_string("Hello, World!".to_string(), 50);
+/// type_string("user@example.com".to_string(), 100);
 /// ```
 ///
 /// # See Also
 ///
 /// - [`type_char`] for details on supported characters
-pub fn type_string(s: String) {
+pub fn type_string(s: String, sleep_millis: u64) {
     for char in s.chars() {
         type_char(char);
+        sleep(sleep_millis)
     }
 }
