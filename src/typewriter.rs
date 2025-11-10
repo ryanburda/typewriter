@@ -1,10 +1,53 @@
+//! A keyboard simulation library for typing text programmatically.
+//!
+//! This module provides functions to simulate keyboard input, including
+//! individual characters, strings, and key chords (multiple keys pressed
+//! simultaneously). It uses the `rdev` library to send keyboard events
+//! to the operating system.
+//!
+//! # Examples
+//!
+//! ```
+//! use typewriter::*;
+//!
+//! // Type a simple string
+//! type_string("Hello, World!".to_string());
+//!
+//! // Type a keyboard shortcut (Ctrl+C)
+//! type_chord(vec![Key::ControlLeft, Key::KeyC]);
+//! ```
+
 use rdev::{EventType, Key, SimulateError, simulate};
 use std::{thread, time};
 
+/// Pauses execution for the specified number of milliseconds.
+///
+/// # Arguments
+///
+/// * `millis` - The number of milliseconds to sleep
+///
+/// # Examples
+///
+/// ```
+/// sleep(100); // Pauses for 100 milliseconds
+/// ```
 pub fn sleep(millis: u64) {
     thread::sleep(time::Duration::from_millis(millis));
 }
 
+/// Sends a keyboard event and waits 50ms.
+///
+/// This is an internal helper function that simulates a keyboard event
+/// (such as a key press or release) and includes a 50ms delay to ensure
+/// proper event processing.
+///
+/// # Arguments
+///
+/// * `event_type` - The keyboard event to simulate (KeyPress or KeyRelease)
+///
+/// # Errors
+///
+/// Prints an error message to stdout if the event simulation fails.
 fn send(event_type: &EventType) {
     match simulate(event_type) {
         Ok(()) => (),
@@ -15,6 +58,24 @@ fn send(event_type: &EventType) {
     sleep(50)
 }
 
+/// Types a chord by pressing multiple keys simultaneously.
+///
+/// This function simulates pressing multiple keys at once (like keyboard shortcuts).
+/// All keys are pressed in sequence, then all keys are released in the same order.
+///
+/// # Arguments
+///
+/// * `keys` - A vector of keys to press together
+///
+/// # Examples
+///
+/// ```
+/// // Type Ctrl+C
+/// type_chord(vec![Key::ControlLeft, Key::KeyC]);
+///
+/// // Type Shift+A (capital A)
+/// type_chord(vec![Key::ShiftLeft, Key::KeyA]);
+/// ```
 pub fn type_chord(keys: Vec<Key>) {
     // press
     for key in &keys {
@@ -26,6 +87,35 @@ pub fn type_chord(keys: Vec<Key>) {
     }
 }
 
+/// Types a single character by simulating the appropriate key combination.
+///
+/// Supports lowercase letters, uppercase letters, digits, and common symbols.
+/// For uppercase letters and symbols requiring Shift, the function automatically
+/// includes the Shift key in the chord.
+///
+/// # Arguments
+///
+/// * `c` - The character to type
+///
+/// # Supported Characters
+///
+/// - Lowercase letters (a-z)
+/// - Uppercase letters (A-Z)
+/// - Digits (0-9)
+/// - Symbols: `! @ # $ % ^ & * ( ) - _ = + [ ] { } \ | ; : ' " , < . > / ? ` ~`
+/// - Space
+///
+/// # Examples
+///
+/// ```
+/// type_char('a');  // Types lowercase 'a'
+/// type_char('A');  // Types uppercase 'A' (with Shift)
+/// type_char('!');  // Types '!' (Shift+1)
+/// ```
+///
+/// # Note
+///
+/// Unsupported characters are silently ignored.
 pub fn type_char(c: char) {
     match c {
         'a' => type_chord(vec![Key::KeyA]),
@@ -127,6 +217,26 @@ pub fn type_char(c: char) {
     }
 }
 
+/// Types an entire string by simulating keystrokes for each character.
+///
+/// This function iterates through each character in the string and calls
+/// `type_char` to simulate the appropriate key combination. Characters that
+/// are not supported by `type_char` will be silently skipped.
+///
+/// # Arguments
+///
+/// * `s` - The string to type
+///
+/// # Examples
+///
+/// ```
+/// type_string("Hello, World!".to_string());
+/// type_string("user@example.com".to_string());
+/// ```
+///
+/// # See Also
+///
+/// - [`type_char`] for details on supported characters
 pub fn type_string(s: String) {
     for char in s.chars() {
         type_char(char);
