@@ -82,7 +82,7 @@ pub fn type_chord(keys: Vec<Key>) {
     for key in &keys {
         send(&EventType::KeyPress(*key));
     }
-    //release
+    // release
     for key in &keys {
         send(&EventType::KeyRelease(*key));
     }
