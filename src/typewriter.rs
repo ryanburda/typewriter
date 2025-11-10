@@ -1,15 +1,18 @@
 use rdev::{EventType, Key, SimulateError, simulate};
 use std::{thread, time};
 
+pub fn sleep(millis: u64) {
+    thread::sleep(time::Duration::from_millis(millis));
+}
+
 fn send(event_type: &EventType) {
-    let delay = time::Duration::from_millis(50);
     match simulate(event_type) {
         Ok(()) => (),
         Err(SimulateError) => {
             println!("We could not send {:?}", event_type);
         }
     }
-    thread::sleep(delay);
+    sleep(50)
 }
 
 pub fn type_chord(keys: Vec<Key>) {
