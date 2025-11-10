@@ -2,7 +2,7 @@ mod scripts;
 mod typewriter;
 
 use rdev::{Button, Event, EventType, listen};
-use scripts::buf_mark;
+use scripts::*;
 use std::process;
 use std::thread;
 
