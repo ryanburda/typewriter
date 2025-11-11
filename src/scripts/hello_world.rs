@@ -1,8 +1,10 @@
 use crate::typewriter::{sleep, type_chord, type_string};
 use rdev::Key;
 
+#[allow(dead_code)]
 const TYPING_DELAY_MS: u64 = 40;
 
+#[allow(dead_code)]
 pub fn script() {
     // Move to below tmux split
     type_chord(vec![Key::ControlLeft, Key::KeyJ]);
