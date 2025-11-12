@@ -9,7 +9,7 @@ use std::thread;
 fn main() {
     // Spawn a thread to run the script
     let worker_handle = thread::spawn(move || {
-        hello_world::script();
+        nvim_tmux_navigator::script();
         println!("Keystrokes completed.");
     });
 
