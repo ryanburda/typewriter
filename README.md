@@ -2,7 +2,7 @@
 
 Have a computer type for you
 
-Script sequences of key presses to make demos look buttery
+Typewriter is a keyboard automation tool with a simple DSL
 
 ![](./docs/typewriter.gif)
 
@@ -21,7 +21,7 @@ Create a script file (e.g., `hello.tw`):
 ```
 // Simple automation script
 [MetaLeft, Space];        // Open Spotlight/launcher
-300;                       // Wait 300ms
+300;                      // Wait 300ms
 "Terminal";               // Type "Terminal"
 [Return];                 // Press Enter
 ```
@@ -50,15 +50,35 @@ typewriter --file script.tw --no-interrupt
 Four simple statement types:
 
 ```
-"text";                   // Type text (default 50ms delay)
-("text", 100);            // Type with custom delay
-500;                      // Sleep 500ms
-[Ctrl, C];               // Key chord (keyboard shortcut)
+"text";           // Type text (default 50ms delay between characters)
+("text", 100);    // Type with custom delay
+500;              // Sleep 500ms
+[Ctrl, C];        // Key chord (keyboard shortcut)
 ```
 
-See [MACRO_GUIDE.md](MACRO_GUIDE.md) for complete syntax reference and examples.
+## Pattern Reference
 
-Example scripts are in the `examples/` directory.
+### 1. String Literals (Default Delay)
+```rust
+"Hello";  // Expands to: type_string("Hello".to_string(), 50)
+```
+
+### 2. String with Custom Delay
+```rust
+("Hello", 100);  // Expands to: type_string("Hello".to_string(), 100)
+```
+
+### 3. Integers (Sleep)
+```rust
+500;  // Expands to: sleep(500)
+```
+
+### 4. Key Chords
+```rust
+[Key::ControlLeft, Key::KeyC];  // Expands to: type_chord(vec![Key::ControlLeft, Key::KeyC])
+```
+
+Example scripts are in the [`examples/`](./examples/) directory.
 
 ## Reference
 
