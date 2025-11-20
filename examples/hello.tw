@@ -1,6 +1,6 @@
 // Simple hello world script
 // Move to terminal with tmux keybinding
-[ControlLeft, J];
+[ControlLeft, Space]; [J];
 
 // Type and execute command
 "echo 'Hello, World!'";
