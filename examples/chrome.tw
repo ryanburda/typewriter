@@ -1,0 +1,36 @@
+// Launch Chrome and create tabs
+
+// Launch Spotlight (macOS)
+[MetaLeft, Space];
+300;
+
+// Type "Chrome"
+("Chro", 40);
+80;
+[Return];
+2000;
+
+// Create 5 tabs
+[MetaLeft, T];
+500;
+[MetaLeft, T];
+500;
+[MetaLeft, T];
+500;
+[MetaLeft, T];
+500;
+[MetaLeft, T];
+500;
+1000;
+
+// Navigate to address bar
+[MetaLeft, L];
+500;
+
+// Search for something
+("cavapoos for sale", 40);
+[Return];
+3000;
+
+// Quit Chrome
+[MetaLeft, Q];
