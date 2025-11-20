@@ -1,10 +1,27 @@
 # Typewriter DSL
 
-Typewriter includes a simple DSL for writing keyboard automation scripts.
+Typewriter is a keyboard automation tool with a simple DSL for writing scripts.
+
+## Usage
+
+You can run scripts either from a file or directly from the command line:
+
+```bash
+# Run a script from a file
+typewriter --file examples/hello.tw
+
+# Run a script directly
+typewriter --script '[MetaLeft, Space]; 300; "Terminal"; [Return];'
+
+# Disable mouse click interrupt
+typewriter --file script.tw --no-interrupt
+```
+
+By default, clicking the left mouse button will interrupt and stop the script. Use `--no-interrupt` to disable this behavior.
 
 ## Syntax
 
-The macro uses semicolons as statement separators and supports these patterns:
+Scripts use semicolons as statement separators and support these patterns:
 
 ```rust
 script! {

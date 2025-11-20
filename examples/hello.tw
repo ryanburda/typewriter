@@ -1,0 +1,13 @@
+// Simple hello world script
+// Move to terminal with tmux keybinding
+[ControlLeft, J];
+
+// Type and execute command
+"echo 'Hello, World!'";
+300;
+[Return];
+
+// Another command with custom typing speed
+("echo 'Goodbye Moon?'", 40);
+300;
+[Return];
