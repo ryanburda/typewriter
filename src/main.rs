@@ -1,3 +1,4 @@
+mod macros;
 mod scripts;
 mod typewriter;
 
